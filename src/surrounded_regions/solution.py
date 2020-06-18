@@ -22,11 +22,11 @@ class Solution:
                         board[point[1]][point[0]] = 'X'
 
     def search(self, board: List[List[str]], given_x: int, given_y: int, max_x: int, max_y: int, seen) -> List:
-        in_region = []
-        to_check = [(given_x, given_y)]
+        in_region = set()
+        to_check = set([(given_x, given_y)])
         while to_check:
             current = to_check.pop()
-            in_region.append((current[0], current[1]))
+            in_region.add((current[0], current[1]))
             seen.add((current[0], current[1]))
             if current[0] <= 0 or current[0] >= max_x or current[1] <= 0 or current[1] >= max_y:
                 return []
@@ -41,9 +41,9 @@ class Solution:
 
         return in_region
 
-    def update_to_check(self, coords, in_region: List, to_check: List) -> None:
+    def update_to_check(self, coords, in_region: List, to_check) -> None:
         if coords not in in_region:
-            to_check.append(coords)
+            to_check.add(coords)
 
 if __name__ == '__main__':
     l0 = ["X", "O", "O", "X", "O", "O", "O"]
