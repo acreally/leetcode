@@ -17,28 +17,17 @@ class Solution:
         return result
 
     def findDupSubdtring(self, S: str, current_substring_len: int) -> str:
-        dup_substrings = set()
+        hashes = {}
         start = 0
         end = current_substring_len
         while (end < len(S) + 1):
             current_substring = S[start: end]
-            current_substring_hash = hash(current_substring)
-            inner_start = 0
-            inner_end = current_substring_len
-            while (inner_end < len(S) + 1):
-                if inner_start == start and inner_end == end:
-                    inner_start += 1
-                    inner_end += 1
-                    continue
-                compare_substring = S[inner_start: inner_end]
-                compare_substring_hash = hash(compare_substring)
-                if current_substring_hash == compare_substring_hash:
-                    if current_substring == compare_substring:
-                        dup_substrings.add(current_substring)
-                inner_start += 1
-                inner_end += 1
+            if current_substring not in hashes:
+                hashes[current_substring]  = 0
+            hashes[current_substring] += 1
             start += 1
             end += 1
-        if dup_substrings:
-            return dup_substrings.pop()
+        pruned_hashes = {k: v for k, v in hashes.items() if v > 1}
+        if pruned_hashes:
+            return pruned_hashes.popitem()[0]
         return ""
