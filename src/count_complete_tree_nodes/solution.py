@@ -4,10 +4,19 @@ TreeNode = TypeVar('TreeNodeObj')
 
 class Solution(Generic[TreeNode]):
     def countNodes(self, root: TreeNode) -> int:
-        if not root:
-            return 0
+        to_check = []
+        if root:
+            to_check.append(root)
+        result = 0
+        while to_check:
+            result += 1
+            current = to_check.pop()
+            if current.left:
+                to_check.append(current.left)
+            if current.right:
+                to_check.append(current.right)
 
-        return 1 + self.countNodes(root.left) + self.countNodes(root.right)
+        return result
 
 class TreeNodeObj:
     def __init__(self, val=0, left=None, right=None):
