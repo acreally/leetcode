@@ -16,7 +16,8 @@ class Solution:
         while current:
             if current.child:
                 current = self.insert_child_list(current, current.child)
-            current = current.next
+            if current:
+                current = current.next
 
         return result
 
